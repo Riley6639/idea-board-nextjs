@@ -18,7 +18,7 @@ async function seedIdeas() {
     const insertedIdeas = await Promise.all(
         ideaBoardData.map(
             (idea) => client.sql`
-          INSERT INTO invoices (customer_id, amount, status, date)
+          INSERT INTO ideas (title, description, dateCreated)
           VALUES (${idea.title}, ${idea.description}, ${idea.dateCreated})
           ON CONFLICT (id) DO NOTHING;
         `,
@@ -28,4 +28,15 @@ async function seedIdeas() {
     return insertedIdeas;
 }
 
-export default seedIdeas;
+export async function GET() {
+    try {
+    await client.sql`BEGIN`;
+    await seedIdeas();
+    await client.sql`COMMIT`;
+
+    return Response.json({ message: 'Seeded ideas successfully' });
+    } catch (error) {
+    await client.sql`ROLLBACK`;
+    return Response.json({ error }, { status: 500 });
+    }
+}
