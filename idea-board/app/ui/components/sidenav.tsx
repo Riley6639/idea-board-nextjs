@@ -5,10 +5,7 @@ export default function Sidenav() {
     return (
           <div>
             <nav className="bg-blue-600 text-white shadow-md">
-              <h1 className="text-2xl font-bold">Idea Board</h1>
-              <div>
-                <p>Welcome to your idea board!</p>
-              </div>
+              <h1 className="text-2xl font-bold">Welcome to your idea Board</h1>
             </nav>
             <div className="flex space-x-4 p-4">
               <Link href="/" className="text-blue-600 hover:underline">Home</Link>
